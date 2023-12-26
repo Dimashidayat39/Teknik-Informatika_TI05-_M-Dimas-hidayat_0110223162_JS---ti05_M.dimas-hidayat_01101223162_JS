@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Form Validasi</h2>
+  <form id="myForm">
+    <label for="namaPelanggan">Nama Pelanggan:</label>
+    <input type="text" id="namaPelanggan" name="namaPelanggan" maxlength="30">
+    <span id="namaPelangganError" class="error"></span><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+    <span id="emailError" class="error"></span><br>
+
+    <label for="jamKeberangkatan">Jam Keberangkatan:</label>
+    <input type="text" id="jamKeberangkatan" name="jamKeberangkatan" placeholder="hh:mm">
+    <span id="jamKeberangkatanError" class="error"></span><br>
+
+    <label for="tujuanKeberangkatan">Tujuan Keberangkatan:</label>
+    <input type="text" id="tujuanKeberangkatan" name="tujuanKeberangkatan">
+    <span id="tujuanKeberangkatanError" class="error"></span><br>
+
+    <label for="jumlahTiket">Jumlah Tiket:</label>
+    <input type="number" id="jumlahTiket" name="jumlahTiket" min="1" max="10">
+    <span id="jumlahTiketError" class="error"></span><br>
+
+    <button type="button" onclick="validateForm()">Submit</button>
+  </form>
+
+  <div id="output" style="display:none;">
+    <h2>Data Form:</h2>
+    <p id="outputNamaPelanggan"></p>
+    <p id="outputEmail"></p>
+    <p id="outputJamKeberangkatan"></p>
+    <p id="outputTujuanKeberangkatan"></p>
+    <p id="outputJumlahTiket"></p>
+  </div>
+
+  <script>
+    function validateForm() {
+      // Reset error messages
+      resetErrors();
+
+      // Get form values
+      var namaPelanggan = document.getElementById("namaPelanggan").value;
+      var email = document.getElementById("email").value;
+      var jamKeberangkatan = document.getElementById("jamKeberangkatan").value;
+      var tujuanKeberangkatan = document.getElementById("tujuanKeberangkatan").value;
+      var jumlahTiket = document.getElementById("jumlahTiket").value;
+
+      // Validate namaPelanggan
+      if (namaPelanggan === "") {
+        displayError("namaPelanggan", "Nama Pelanggan harus diisi");
+      } else if (namaPelanggan.length > 30) {
+        displayError("namaPelanggan", "Nama Pelanggan maksimal 30 karakter");
+      }
+
+      // Validate email
+      if (email === "") {
+        displayError("email", "Email harus diisi");
+      } else if (!validateEmail(email)) {
+        displayError("email", "Format email tidak valid");
+      }
+
+      // Validate jamKeberangkatan
+      if (jamKeberangkatan === "" || !validateTimeFormat(jamKeberangkatan)) {
+        displayError("jamKeberangkatan", "Format jam tidak valid (hh:mm)");
+      }
+
+      // Validate tujuanKeberangkatan
+      if (tujuanKeberangkatan === "") {
+        displayError("tujuanKeberangkatan", "Tujuan Keberangkatan harus diisi");
+      }
+
+      // Validate jumlahTiket
+      if (jumlahTiket === "" || isNaN(jumlahTiket) || jumlahTiket < 1 || jumlahTiket > 10) {
+        displayError("jumlahTiket", "Jumlah Tiket harus diisi (1-10)");
+      }
+
+      // If no errors, display output
+      if (!hasErrors()) {
+        displayOutput(namaPelanggan, email, jamKeberangkatan, tujuanKeberangkatan, jumlahTiket);
+      }
+    }
+
+    function resetErrors() {
+      var elements = document.getElementsByClassName("error");
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].innerHTML = "";
+      }
+    }
+
+    function displayError(field, message) {
+      document.getElementById(field + "Error").innerHTML = message;
+      document.getElementById(field).style.borderColor = "red";
+    }
+
+    function hasErrors() {
+      var elements = document.getElementsByClassName("error");
+      for (var i = 0; i < elements.length; i++) {
+        if (elements[i].innerHTML !== "") {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function validateEmail(email) {
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function validateTimeFormat(time) {
+      var timeRegex = /^([01]\d|2[0-3]):?([0-5]\d)$/;
+      return timeRegex.test(time);
+    }
+
+    function displayOutput(namaPelanggan, email, jamKeberangkatan, tujuanKeberangkatan, jumlahTiket) {
+      // Hide form
+      document.getElementById("myForm").style.display = "none";
+
+      // Display output
+      document.getElementById("output").style.display = "block";
+      document.getElementById("outputNamaPelanggan").innerText = "Nama Pelanggan: " + namaPelanggan;
+      document.getElementById("outputEmail").innerText = "Email: " + email;
+      document.getElementById("outputJamKeberangkatan").innerText = "Jam Keberangkatan: " + jamKeberangkatan;
+      document.getElementById("outputTujuanKeberangkatan").innerText = "Tujuan Keberangkatan: " + tujuanKeberangkatan;
+      document.getElementById("outputJumlahTiket").innerText = "Jumlah Tiket: " + jumlahTiket;
+    }
+  </script>
+
+</body>
+</html>

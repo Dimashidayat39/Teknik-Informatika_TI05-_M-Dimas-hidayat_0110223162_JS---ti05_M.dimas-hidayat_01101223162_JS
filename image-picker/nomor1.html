@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <script>
+        function validateLogin() {
+    // Mendapatkan nilai username dan password dari form
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+
+    // Menentukan username dan password yang valid
+    var validUsername = "ahmad2017";
+    var validPassword = "integrity";
+
+    // Memeriksa apakah username dan password sesuai
+    if (username === validUsername && password === validPassword) {
+        alert("Login Sukses");
+        // Arahkan ke halaman baru jika login sukses
+        window.location.href = "halaman_baru.html";
+    } else {
+        alert("Login Gagal");
+    }
+}
+
+    </script>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <input type="button" value="Login" onclick="validateLogin()">
+    </form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function image_picker(){
+             const list_gambar = ["London inggris.jpg","Seoul korea.jpg","Tokyo japan.jpg"];
+             let pilihan = document.getElementById("option").value;
+
+
+             if( pilihan == "London inggris" ){
+                let select = list_gambar[0];
+                document.getElementById("gambar").src = `images/${select}`;
+             }
+             if( pilihan == "Seoul korea" ){
+                let select = list_gambar[1];
+                document.getElementById("gambar").src = `images/${select}`;
+             }
+             if( pilihan == "Tokyo japan" ){
+                let select = list_gambar[2];
+                document.getElementById("gambar").src = `images/${select}`;
+             }
+
+             
+        } 
+    </script>    
+ </head>
+</head>
+<body>
+    <h1>Image Picker</h1>
+
+    <select name="" id="option" onchange="image_picker()">
+        <option value="London inggris"> London inggris </option>
+        <option value="Seoul korea"> Seoul korea </option>
+        <option value="Tokyo japan"> Tokyo japan </option>
+    </select>
+
+    <div class="container">
+        <img id="gambar">
+    </div>
+</body>
+</html>
